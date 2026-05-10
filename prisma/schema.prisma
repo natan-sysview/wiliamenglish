@@ -1,0 +1,102 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id             String    @id @default(cuid())
+  nombre         String
+  email          String    @unique
+  passwordHash   String
+  rol            Rol
+  sucursal       Sucursal?
+  nivel          Nivel?
+  paqueteId      String?
+  paquete        Paquete?  @relation(fields: [paqueteId], references: [id])
+  clasesAlumno   Reservacion[] @relation("alumno")
+  clasesMaestro  Horario[]     @relation("maestro")
+  activo         Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("usuarios")
+}
+
+model Paquete {
+  id                     String    @id @default(cuid())
+  nombre                 String
+  clasesPersonales       Int
+  clasesGrupalListening  Int
+  clasesGrupalPracticing Int
+  alumnos                Usuario[]
+  activo                 Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+
+  @@map("paquetes")
+}
+
+model Horario {
+  id            String        @id @default(cuid())
+  fechaHora     DateTime
+  tipoClase     TipoClase
+  modalidad     Modalidad
+  nivel         Nivel
+  sucursal      Sucursal
+  maestroId     String
+  maestro       Usuario       @relation("maestro", fields: [maestroId], references: [id])
+  capacidad     Int
+  reservaciones Reservacion[]
+  activo        Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+
+  @@map("horarios")
+}
+
+model Reservacion {
+  id          String            @id @default(cuid())
+  alumnoId    String
+  alumno      Usuario           @relation("alumno", fields: [alumnoId], references: [id])
+  horarioId   String
+  horario     Horario           @relation(fields: [horarioId], references: [id])
+  estado      EstadoReservacion @default(ACTIVA)
+  createdAt   DateTime          @default(now())
+
+  @@map("reservaciones")
+}
+
+enum Rol {
+  ADMIN
+  MAESTRO
+  ALUMNO
+}
+
+enum Sucursal {
+  QUERETARO
+  METEPEC
+}
+
+enum Nivel {
+  A
+  B
+  C
+}
+
+enum TipoClase {
+  PERSONAL
+  GRUPAL_LISTENING
+  GRUPAL_PRACTICING
+}
+
+enum Modalidad {
+  PRESENCIAL
+  ZOOM
+}
+
+enum EstadoReservacion {
+  ACTIVA
+  REAGENDADA
+  CANCELADA
+}

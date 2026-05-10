@@ -1,0 +1,7 @@
+reagendamiento:
+  max_reagendamientos_por_mes: 4
+  anticipacion_minima_horas: 2
+  permite_reagendar_mismo_dia: true
+  permite_reagendar_grupal: true
+  permite_reagendar_personal: true
+  dias_anticipacion_maxima: 7
