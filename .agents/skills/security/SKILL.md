@@ -57,13 +57,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 ---
 
-## 2. Roles
+## 2. Roles y Matriz de Permisos (RBAC)
 
-```
-ADMIN    → gestión total (usuarios, horarios, paquetes)
-MAESTRO  → ver su agenda y alumnos
-ALUMNO   → ver sus clases y reagendar
-```
+El sistema opera bajo un esquema estricto de control de acceso basado en roles:
+
+- **ADMIN** (Director): Control maestro. Único que puede borrar bases de datos, modificar precios de paquetes educativos y ver métricas financieras globales.
+- **STAFF** (Secretaria/Coordinador): Operación diaria. Puede crear/editar usuarios, asignar paquetes, y reagendar clases. NO puede alterar precios ni eliminar registros críticos.
+- **MAESTRO**: Acceso limitado a la operatividad. Puede ver su propia agenda de clases asignadas, pasar lista y ver los alumnos inscritos en su sesión. NO puede crear paquetes ni modificar datos de cobro.
+- **ALUMNO**: Acceso de solo lectura y reservación. Puede ver sus clases pagadas, reservar clases nuevas según los créditos de su paquete, y reagendar con las reglas establecidas.
+
+---
+
+## 2.1 Flujo de Onboarding (Ruta de Conserjería)
+
+Para evitar cuentas falsas (spam) y mantener el control administrativo, la creación de usuarios sigue este flujo cerrado:
+1. **Creación:** Solo el `ADMIN` puede dar de alta nuevos alumnos y maestros desde el panel de Comunidad.
+2. **Clave Temporal:** Al crear la cuenta, el Admin asigna una contraseña temporal.
+3. **Bandera de Seguridad:** La base de datos marcará al usuario con una bandera interna (ej. `requiereCambioPassword: true`).
+4. **Cambio Forzado:** Cuando el usuario inicie sesión con la clave temporal, el Middleware o el Dashboard detectará la bandera y **bloqueará el acceso**, forzándolo a cambiar su contraseña en una pantalla dedicada. Tras cambiarla, se libera el acceso al sistema.
 
 ---
 

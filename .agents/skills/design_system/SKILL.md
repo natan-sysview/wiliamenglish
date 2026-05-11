@@ -17,9 +17,15 @@ Mobile-first, moderno, y alineado con los colores de la marca William English.
 ### Colores Primarios (de la marca)
 
 ```
-Azul William:    #0033A0  (azul fuerte del logo — color principal)
+Azul William:    #2952F5  (azul fuerte del logo — color principal)
 Rojo William:    #CC0000  (rojo de los letreros del logo — acento/CTA)
 Blanco:          #FFFFFF  (fondo principal)
+```
+
+### Degradado de Marca (FinTech Style)
+Para resaltar el nombre "William English" o títulos de máxima jerarquía, usar este gradiente de impacto:
+```html
+className="bg-clip-text text-transparent bg-gradient-to-r from-[#2952F5] to-[#CC0000]"
 ```
 
 ### Modo Claro (default — la mayoría de usuarios)
@@ -31,19 +37,19 @@ Texto títulos:       text-gray-900
 Texto normal:        text-gray-700
 Texto secundario:    text-gray-500
 Bordes:              border-gray-200
-Botón primario:      bg-[#0033A0] text-white hover:bg-[#002880]
+Botón primario:      bg-[#2952F5] text-white hover:bg-[#002880]
 Botón acción/CTA:    bg-[#CC0000] text-white hover:bg-[#AA0000]
-Focus rings:         ring-[#0033A0]/30
+Focus rings:         ring-[#2952F5]/30
 ```
 
-### Modo Oscuro (opcional, fase futura)
+### Modo Oscuro (Totalmente Integrado y Activo)
 
 ```
-Fondo principal:     bg-[#0f1117]
-Fondo tarjetas:      bg-[#1c1e2b]
-Texto:               text-gray-300 / text-white
-Bordes:              border-white/10
-Botón primario:      bg-[#3366CC] text-white
+Fondo principal:     bg-[#0b1120]
+Fondo tarjetas:      bg-slate-900/80
+Texto:               text-slate-300 / text-white
+Bordes:              border-slate-800/50 o border-white/10
+Botón primario:      bg-[#2952F5] text-white
 ```
 
 ### Colores Funcionales
@@ -70,23 +76,25 @@ Avatares:               rounded-full
 
 ---
 
-## 3. Glassmorphism (Efecto Cristal)
+## 3. Premium Glassmorphism (Super Flow)
 
-Para headers y modales flotantes:
+Para headers, dropdowns y modales flotantes:
 
 ```
-Modo Claro:   bg-white/70 backdrop-blur-md border border-gray-200/50
-Modo Oscuro:  bg-[#161822]/70 backdrop-blur-md border border-white/5
+Modo Claro:   bg-white/80 backdrop-blur-2xl border border-white/50
+Modo Oscuro:  bg-slate-900/80 backdrop-blur-2xl border border-slate-700/50
+Efecto Adicional: Redondeado expansivo (rounded-3xl o rounded-[2rem])
 ```
 
 ---
 
-## 4. Sombras
+## 4. Sombras y Profundidad
 
 ```
-Botón primario:         shadow-lg shadow-[#0033A0]/20
-Contenedor flotante:    shadow-xl shadow-gray-200/30
-Tarjeta hover:          shadow-md → shadow-lg (transición)
+Botón primario:         shadow-lg shadow-blue-900/30
+Contenedor flotante:    shadow-[0_20px_60px_-15px_rgba(41,82,245,0.15)] (Modo Claro)
+Contenedor flotante:    shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] (Modo Oscuro)
+Tarjeta hover:          shadow-md → shadow-2xl (transición expansiva)
 ```
 
 ---
@@ -109,13 +117,14 @@ Tarjeta hover:          shadow-md → shadow-lg (transición)
 ✅ Tarjetas: hover:shadow-lg con transición suave
 ```
 
-### Mobile-First
+### Mobile-First (Responsive Extremo)
 
 ```
-✅ Diseñar PRIMERO para celular (375px)
-✅ Después adaptar para tablet (768px) y desktop (1024px+)
-✅ El calendario debe ser usable con el dedo (touch targets mínimo 44px)
-✅ Reagendar en 3 taps máximo
+✅ Diseñar PRIMERO para las pantallas más pequeñas (320px - 375px) usando col, w-full, text-base.
+✅ Adaptar para tablet y desktop usando prefijos (md:flex-row, lg:text-4xl).
+✅ Mentalidad "Líquida": Usar fracciones (flex-1, w-full), NO usar tamaños rígidos (w-[400px]) que rompan el móvil.
+✅ Seguro de Vida para Textos Flexibles: SIEMPRE usar `min-w-0` en el contenedor padre de textos largos junto con `truncate` para evitar desbordamientos y saltos de línea destructivos.
+✅ Los botones y controles deben ser fáciles de presionar con el pulgar (ej. w-full o grid-cols-2 en móviles).
 ```
 
 ---
